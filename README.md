@@ -66,3 +66,10 @@ go test -v -cover ./...
 go test -coverprofile=coverage.out ./...
 go tool cover -html=coverage.out -o coverage.html
 ```
+
+## 文档
+
+- [Ginkgo](https://onsi.github.io/ginkgo/#bootstrapping-a-suite)
+- [Gomega](https://onsi.github.io/gomega/)
+- [gomock](https://github.com/uber-go/mock)
+
