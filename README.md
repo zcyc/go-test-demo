@@ -23,7 +23,7 @@ go install go.uber.org/mock/mockgen@latest
 在需要 mock 的 interface 目录下执行，注意修改 xxxrepo 当前包名。
 
 ```bash
-mockgen -source=struct.go -destination=mock_struct.go -package=xxxrepo
+mockgen -source=xxx.go -destination=mock_xxx.go -package=xxxrepo
 ```
 
 ## 生成 suite
