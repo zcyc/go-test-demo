@@ -28,7 +28,7 @@ mockgen -source=struct.go -destination=mock_struct.go -package=xxxrepo
 
 ## 生成 suite
 
-必须生成 suite，否则 specs 无法运行。
+在需要测试的文件目录下执行。必须生成 suite，否则 specs 无法运行。
 
 ```bash
 ginkgo bootstrap
