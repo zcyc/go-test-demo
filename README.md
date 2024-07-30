@@ -20,15 +20,28 @@ go install go.uber.org/mock/mockgen@latest
 
 ## 生成 mock
 
-在需要 mock 的 interface 目录下执行，注意修改 xxxrepo 当前包名。
+在需要 mock 的 interface 所在目录执行生成命令，记得修改命令中的 xxx，**每次修改 interface 都需要执行**。
 
 ```bash
-mockgen -source=xxx.go -destination=mock_xxx.go -package=xxxrepo
+mockgen -source=xxx.go -destination=mock_xxx.go -package=xxx
+```
+## 批量生成 mock
+
+在需要 mock 的 interface 上添加注释，记得修改命令中的 xxx。
+
+```bash
+//go:generate mockgen -source=xxx.go -destination=mock_xxx.go -package=xxx
+```
+
+在项目根目录执行生成命令，**每次修改 interface 都需要执行**。
+
+```bash
+go generate ./...
 ```
 
 ## 生成 suite
 
-在需要测试的文件目录下执行。必须生成 suite，否则 specs 无法运行。
+在需要测试的文件所在目录执行。必须生成 suite，否则 specs 无法运行。
 
 ```bash
 ginkgo bootstrap
@@ -36,7 +49,7 @@ ginkgo bootstrap
 
 ## 生成 specs
 
-使用 [Ginkgo](https://plugins.jetbrains.com/plugin/17554-ginkgo) 插件要将 suite 和 specs 合并为一个文件。
+记得修改命令中的 xxx，使用 [Ginkgo](https://plugins.jetbrains.com/plugin/17554-ginkgo) 插件要将 suite 和 specs 合并为一个文件。
 
 ```bash
 ginkgo generate xxx
