@@ -1,7 +1,7 @@
-package mock
+package service
 
 import (
-	mock "MockTest/internal/user/service"
+	"MockTest/internal/user/dao"
 	"context"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -30,21 +30,21 @@ var _ = Describe("User", func() {
 
 	Describe("Get User", func() {
 		It("should get user 17", func() {
-			mockUserData := NewMockUserData(ctrl)
-			mockUserData.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(mock.User{
-				NickName: "bobby18",
+			mockUserDao := dao.NewMockUserDao(ctrl)
+			mockUserDao.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(&dao.User{
+				Nickname: "bobby18",
 			}, nil)
 
 			//实际调用过程
-			userServer := mock.UserServer{
-				Db: mockUserData,
+			userServer := UserService{
+				userDao: mockUserDao,
 			}
 			user, err := userServer.GetUserByMobile(context.Background(), "18")
 			//判断正确与否
 			if err != nil {
 				GinkgoT().Errorf("error: %v", err)
 			}
-			Expect(user.NickName).NotTo(Equal("bobby18"))
+			Expect(user.Nickname).NotTo(Equal("bobby18"))
 		})
 
 		It("should get user 19", func() {
@@ -53,14 +53,14 @@ var _ = Describe("User", func() {
 			AddReportEntry(experiment.Name, experiment)
 			stopWatch := experiment.NewStopwatch()
 
-			mockUserData := NewMockUserData(ctrl)
-			mockUserData.EXPECT().GetUserByMobile(gomock.Any(), "19").Return(mock.User{
-				NickName: "bobby19",
+			mockUserDao := dao.NewMockUserDao(ctrl)
+			mockUserDao.EXPECT().GetUserByMobile(gomock.Any(), "19").Return(&dao.User{
+				Nickname: "bobby19",
 			}, nil)
 
 			//实际调用过程
-			userServer := mock.UserServer{
-				Db: mockUserData,
+			userServer := UserService{
+				userDao: mockUserDao,
 			}
 
 			// 计时：Mock用时
@@ -78,18 +78,10 @@ var _ = Describe("User", func() {
 			if err != nil {
 				GinkgoT().Errorf("error: %v", err)
 			}
-			if user.NickName != "bobby19" {
-				GinkgoT().Errorf("expect bobby19, got %s", user.NickName)
+			if user.Nickname != "bobby19" {
+				GinkgoT().Errorf("expect bobby19, got %s", user.Nickname)
 			}
-			Expect(user.NickName).To(Equal("bobby19"))
+			Expect(user.Nickname).To(Equal("bobby19"))
 		})
 	})
-
-	DescribeTable("多测试用例", func(x, y int, expected bool) {
-		Expect(x > y).To(Equal(expected))
-	},
-		Entry("x > y", 20, 10, true),
-		Entry("x = y", 0, 0, false),
-		Entry("x < y", 0, 10, false),
-	)
 })

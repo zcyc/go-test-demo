@@ -1,6 +1,9 @@
-package mock
+package service
 
-import "context"
+import (
+	"MockTest/internal/user/dao"
+	"context"
+)
 
 /*
 gomock 测试
@@ -10,27 +13,17 @@ gomock 测试
 	go install go.uber.org/mock/mockgen@latest
 */
 
-type User struct {
-	Mobile   string
-	Password string
-	NickName string
+type UserService struct {
+	userDao dao.UserDao
 }
 
-type UserServer struct {
-	Db UserData
-}
-
-func (us *UserServer) GetUserByMobile(ctx context.Context, mobile string) (User, error) {
-	user, err := us.Db.GetUserByMobile(ctx, mobile)
+func (s *UserService) GetUserByMobile(ctx context.Context, mobile string) (*dao.User, error) {
+	user, err := s.userDao.GetUserByMobile(ctx, mobile)
 	if err != nil {
-		return User{}, err
+		return user, err
 	}
-	if user.NickName == "bobby18" {
-		user.NickName = "bobby17"
+	if user.Nickname == "bobby18" {
+		user.Nickname = "bobby17"
 	}
 	return user, nil
-}
-
-type UserData interface {
-	GetUserByMobile(ctx context.Context, mobile string) (User, error)
 }

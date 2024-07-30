@@ -1,7 +1,7 @@
-package mock
+package service
 
 import (
-	mock "MockTest/internal/user/service"
+	"MockTest/internal/user/dao"
 	"context"
 	"go.uber.org/mock/gomock"
 	"testing"
@@ -12,14 +12,14 @@ func TestGetUserByMobile(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserData := NewMockUserData(ctrl)
-	mockUserData.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(mock.User{
-		NickName: "bobby18",
+	mockUserData := dao.NewMockUserDao(ctrl)
+	mockUserData.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(&dao.User{
+		Nickname: "bobby18",
 	}, nil)
 
 	//实际调用过程
-	userServer := mock.UserServer{
-		Db: mockUserData,
+	userServer := UserService{
+		userDao: mockUserData,
 	}
 	user, err := userServer.GetUserByMobile(context.Background(), "18")
 
@@ -28,7 +28,7 @@ func TestGetUserByMobile(t *testing.T) {
 		t.Errorf("error: %v", err)
 	}
 
-	if user.NickName != "bobby17" {
+	if user.Nickname != "bobby17" {
 		t.Errorf("error: %v", err)
 	}
 
@@ -39,14 +39,14 @@ func TestGetUserByMobileFail(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockUserData := NewMockUserData(ctrl)
-	mockUserData.EXPECT().GetUserByMobile(gomock.Any(), "19").Return(mock.User{
-		NickName: "bobby19",
+	mockUserData := dao.NewMockUserDao(ctrl)
+	mockUserData.EXPECT().GetUserByMobile(gomock.Any(), "19").Return(&dao.User{
+		Nickname: "bobby19",
 	}, nil)
 
 	//实际调用过程
-	userServer := mock.UserServer{
-		Db: mockUserData,
+	userServer := UserService{
+		userDao: mockUserData,
 	}
 	user, err := userServer.GetUserByMobile(context.Background(), "19")
 
@@ -55,7 +55,7 @@ func TestGetUserByMobileFail(t *testing.T) {
 		t.Errorf("error: %v", err)
 	}
 
-	if user.NickName != "bobby19" {
+	if user.Nickname != "bobby19" {
 		t.Errorf("error: %v", err)
 	}
 
