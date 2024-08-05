@@ -1,7 +1,8 @@
-package service_test
+package tests
 
 import (
 	"MockTest/internal/user/dao"
+	"MockTest/internal/user/dao/mocks"
 	"MockTest/internal/user/service"
 	"context"
 	. "github.com/onsi/ginkgo/v2"
@@ -31,7 +32,7 @@ var _ = Describe("User Suit", func() {
 
 	Describe("Get User", func() {
 		It("Equal", func() {
-			mockUserDao := dao.NewMockUserDao(ctrl)
+			mockUserDao := mocks.NewMockUserDao(ctrl)
 			mockUserDao.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(&dao.User{
 				Nickname: "bobby18",
 			}, nil)
@@ -54,7 +55,7 @@ var _ = Describe("User Suit", func() {
 			AddReportEntry(experiment.Name, experiment)
 			stopWatch := experiment.NewStopwatch()
 
-			mockUserDao := dao.NewMockUserDao(ctrl)
+			mockUserDao := mocks.NewMockUserDao(ctrl)
 			mockUserDao.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(&dao.User{
 				Nickname: "bobby19",
 			}, nil)

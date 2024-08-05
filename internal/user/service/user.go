@@ -5,14 +5,6 @@ import (
 	"context"
 )
 
-/*
-gomock 测试
-安装：
-	go get -u go.uber.org/mock
-
-	go install go.uber.org/mock/mockgen@latest
-*/
-
 type UserService struct {
 	UserDao dao.UserDao
 }
