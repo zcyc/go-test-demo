@@ -1,7 +1,8 @@
-package service
+package service_test
 
 import (
 	"MockTest/internal/user/dao"
+	"MockTest/internal/user/service"
 	"context"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -11,12 +12,12 @@ import (
 	"time"
 )
 
-func TestMockUser(t *testing.T) {
+func TestUserGinkgo(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "User Suit")
 }
 
-var _ = Describe("User", func() {
+var _ = Describe("User Suit", func() {
 	var (
 		ctrl *gomock.Controller
 	)
@@ -29,38 +30,38 @@ var _ = Describe("User", func() {
 	})
 
 	Describe("Get User", func() {
-		It("should get user 17", func() {
+		It("Equal", func() {
 			mockUserDao := dao.NewMockUserDao(ctrl)
 			mockUserDao.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(&dao.User{
 				Nickname: "bobby18",
 			}, nil)
 
 			//实际调用过程
-			userServer := UserService{
-				userDao: mockUserDao,
+			userServer := service.UserService{
+				UserDao: mockUserDao,
 			}
 			user, err := userServer.GetUserByMobile(context.Background(), "18")
 			//判断正确与否
 			if err != nil {
 				GinkgoT().Errorf("error: %v", err)
 			}
-			Expect(user.Nickname).NotTo(Equal("bobby18"))
+			Expect(user.Nickname).To(Equal("bobby18"))
 		})
 
-		It("should get user 19", func() {
+		It("NotEqual", func() {
 			// 性能探针
 			experiment := gmeasure.NewExperiment("end-to-end web-server performance")
 			AddReportEntry(experiment.Name, experiment)
 			stopWatch := experiment.NewStopwatch()
 
 			mockUserDao := dao.NewMockUserDao(ctrl)
-			mockUserDao.EXPECT().GetUserByMobile(gomock.Any(), "19").Return(&dao.User{
+			mockUserDao.EXPECT().GetUserByMobile(gomock.Any(), "18").Return(&dao.User{
 				Nickname: "bobby19",
 			}, nil)
 
 			//实际调用过程
-			userServer := UserService{
-				userDao: mockUserDao,
+			userServer := service.UserService{
+				UserDao: mockUserDao,
 			}
 
 			// 计时：Mock用时
@@ -68,7 +69,10 @@ var _ = Describe("User", func() {
 			stopWatch.Record("Mock Time").Reset()
 
 			// 测量性能
-			user, err := userServer.GetUserByMobile(context.Background(), "19")
+			user, err := userServer.GetUserByMobile(context.Background(), "18")
+			if err != nil {
+				GinkgoT().Errorf("error: %v", err)
+			}
 
 			// 计时：业务处理用时
 			time.Sleep(5 * time.Second)
@@ -78,10 +82,8 @@ var _ = Describe("User", func() {
 			if err != nil {
 				GinkgoT().Errorf("error: %v", err)
 			}
-			if user.Nickname != "bobby19" {
-				GinkgoT().Errorf("expect bobby19, got %s", user.Nickname)
-			}
-			Expect(user.Nickname).To(Equal("bobby19"))
+
+			Expect(user.Nickname).NotTo(Equal("bobby18"))
 		})
 	})
 })

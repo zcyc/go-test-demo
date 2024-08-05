@@ -14,16 +14,13 @@ gomock 测试
 */
 
 type UserService struct {
-	userDao dao.UserDao
+	UserDao dao.UserDao
 }
 
 func (s *UserService) GetUserByMobile(ctx context.Context, mobile string) (*dao.User, error) {
-	user, err := s.userDao.GetUserByMobile(ctx, mobile)
+	user, err := s.UserDao.GetUserByMobile(ctx, mobile)
 	if err != nil {
 		return user, err
-	}
-	if user.Nickname == "bobby18" {
-		user.Nickname = "bobby17"
 	}
 	return user, nil
 }
