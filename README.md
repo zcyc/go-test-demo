@@ -1,6 +1,6 @@
 # go-test-demo
 
-Go 使用 Ginkgo、Gomega、GoMock 做单元测试的例子。
+Go 使用 Testing、Ginkgo、Gomega、GoMock、Testify 做单元测试的例子。
 
 ## 介绍
 
@@ -8,14 +8,15 @@ Go 使用 Ginkgo、Gomega、GoMock 做单元测试的例子。
   还可以帮助开发者组织测试用例，并提供一些方便的功能，例如并行测试、测试结果报告等等。
 - Gomega 是一个 Go 语言的断言库，它提供了一系列的匹配器，让开发者可以用更自然、更易读的方式来编写断言语句。 Gomega 的匹配器比
   Go 标准库中的 assert 函数更强大、更灵活，也更易于阅读。
-- GoMock 是一个 Go 语言的模拟框架，可以帮助开发者在测试过程中创建模拟对象，从而隔离代码，更有效地测试代码的逻辑。
-
+- GoMock 是一个 Go 语言的 Mock 框架，可以帮助开发者创建 Mock 对象，从而隔离代码，更有效地测试代码的逻辑。
+- Mockery 是一个 Go 语言的 Mock 框架，可以帮助开发者创建 Testify Mock 对象。
 
 ## 安装
 
 ```bash
 go install github.com/onsi/ginkgo/v2/ginkgo
 go install go.uber.org/mock/mockgen@latest
+go install github.com/vektra/mockery/v2@v2.44.1
 ```
 
 ## 生成 mock
@@ -25,6 +26,7 @@ go install go.uber.org/mock/mockgen@latest
 ```bash
 mockgen -source=xxx.go -destination=mock_xxx.go -package=xxx
 ```
+
 ## 批量生成 mock
 
 在需要 mock 的 interface 上添加注释，记得修改命令中的 xxx。
