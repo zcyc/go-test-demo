@@ -4,12 +4,11 @@ Go 使用 Testing、Ginkgo、Gomega、GoMock、Testify 做单元测试的例子�
 
 ## 介绍
 
-- Ginkgo 是一个 Go 语言的 BDD 测试框架，它提供了一个类似于 RSpec 的 DSL，让开发者可以用更自然的语言来描述测试用例。 Ginkgo
-  还可以帮助开发者组织测试用例，并提供一些方便的功能，例如并行测试、测试结果报告等等。
-- Gomega 是一个 Go 语言的断言库，它提供了一系列的匹配器，让开发者可以用更自然、更易读的方式来编写断言语句。 Gomega 的匹配器比
-  Go 标准库中的 assert 函数更强大、更灵活，也更易于阅读。
-- GoMock 是一个 Go 语言的 Mock 框架，可以帮助开发者创建 Mock 对象，从而隔离代码，更有效地测试代码的逻辑。
-- Mockery 是一个 Go 语言的 Mock 框架，可以帮助开发者创建 Testify Mock 对象。
+- Ginkgo 是一个 Go 语言的 BDD 测试框架，它提供了一个类似于 RSpec 的 DSL，让开发者可以用更自然的语言来描述测试用例。
+- GoMock 是一个 Go 语言的 Mock 生成器，可以帮助开发者创建 Ginkgo Mock 对象。
+- Gomega 是一个 Go 语言的断言库，它提供了一系列的匹配器，让开发者可以用更自然、更易读的方式来编写断言语句。
+- Testify 是一个 Go 语言测试框架，可以很好地与标准库配合使用。
+- Mockery 是一个 Go 语言的 Mock 生成器，可以帮助开发者创建 Testify Mock 对象。
 
 ## 安装
 
@@ -19,29 +18,44 @@ go install go.uber.org/mock/mockgen@latest
 go install github.com/vektra/mockery/v2@v2.44.1
 ```
 
-## 生成 mock
+## 使用命令生成 mock 文件
 
 在需要 mock 的 interface 所在目录执行生成命令，记得修改命令中的 xxx，**每次修改 interface 都需要执行**。
 
+### GoMock
+xxx 为 interface 所在的文件名称
 ```bash
-mockgen -source=xxx.go -destination=mock_xxx.go -package=xxx
+mockgen -source=xxx.go -destination=mocks/gomock_struct.go -package=mocks
+```
+### Mockery
+xxx 为 interface 名称
+```bash
+mockery --name xxx --filename testify_struct.go --outpkg mocks
 ```
 
-## 批量生成 mock
+## 使用注释批量生成 mock 文件
 
-在需要 mock 的 interface 上添加注释，记得修改命令中的 xxx。
-
-```bash
-//go:generate mockgen -source=xxx.go -destination=mock_xxx.go -package=xxx
-```
-
-在项目根目录执行生成命令，**每次修改 interface 都需要执行**。
+在需要 mock 的 interface 上添加注释，然后在项目根目录执行生成命令。**每次修改 interface 都需要执行**。
 
 ```bash
 go generate ./...
 ```
 
-## 生成 suite
+### GoMock 注释
+xxx 为 interface 所在的文件名称
+```bash
+//go:generate mockgen -source=xxx.go -destination=mocks/gomock_struct.go -package=mocks
+```
+
+### Mockery 注释
+xxx 为 interface 名称
+```bash
+//go:generate mockery --name xxx --filename testify_struct.go --outpkg mocks
+```
+
+## 使用 Ginkgo 进行测试
+
+1. 生成 suite
 
 在需要测试的文件所在目录执行。必须生成 suite，否则 specs 无法运行。
 
@@ -49,12 +63,28 @@ go generate ./...
 ginkgo bootstrap
 ```
 
-## 生成 specs
+2. 生成 specs
 
 记得修改命令中的 xxx，使用 [Ginkgo](https://plugins.jetbrains.com/plugin/17554-ginkgo) 插件要将 suite 和 specs 合并为一个文件。
 
 ```bash
 ginkgo generate xxx
+```
+
+## 使用 Testify 进行测试
+GoLand 可以一键生成测试文件，手动创建步骤如下：
+1. 创建一个名为 *_test.go 的文件，例如 mypackage_test.go。
+2. 在文件中定义测试函数，函数名必须以 Test 开头，例如 TestMyFunction。
+3. 在测试函数中使用 testing.T 类型来进行断言和错误处理。
+```go
+package xx_test
+
+import (
+    "testing"
+)
+
+func TestMyFunction(t *testing.T) {
+}
 ```
 
 ## 执行测试
