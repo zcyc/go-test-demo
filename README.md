@@ -117,4 +117,6 @@ go tool cover -html=coverage.out -o coverage.html
 - [Ginkgo](https://onsi.github.io/ginkgo/#bootstrapping-a-suite)
 - [Gomega](https://onsi.github.io/gomega/)
 - [gomock](https://github.com/uber-go/mock)
+- [Testify](https://github.com/stretchr/testify)
+- [Mockery](https://vektra.github.io/mockery/latest)
 
