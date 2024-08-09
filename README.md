@@ -1,6 +1,6 @@
 # go-test-demo
 
-Go 使用 Testing、Ginkgo、Gomega、GoMock、Testify 做单元测试的例子。
+Go 使用 Testing、Ginkgo、GoMock、Gomega、Testify、Mockery 做单元测试的例子。
 
 ## 介绍
 
