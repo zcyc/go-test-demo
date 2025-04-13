@@ -1,17 +1,18 @@
 package tests
 
 import (
-	"MockTest/internal/user/dao"
-	"MockTest/internal/user/dao/mocks"
-	"MockTest/internal/user/service"
+	"MockTest/pkg/user/dao"
+	"MockTest/pkg/user/mocks"
+	"MockTest/pkg/user/service"
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestTestifyEqual(t *testing.T) {
 	//mock 准备工作
-	mockUserDao := mocks.NewUserDao(t)
+	mockUserDao := new(mocks.UserDao)
 	mockUserDao.On("GetUserByMobile", context.Background(), "18").Return(&dao.User{
 		Nickname: "bobby18",
 	}, nil)
@@ -29,7 +30,7 @@ func TestTestifyEqual(t *testing.T) {
 
 func TestTestifyNotEqual(t *testing.T) {
 	//mock 准备工作
-	mockUserDao := mocks.NewUserDao(t)
+	mockUserDao := new(mocks.UserDao)
 	mockUserDao.On("GetUserByMobile", context.Background(), "18").Return(&dao.User{
 		Nickname: "bobby19",
 	}, nil)

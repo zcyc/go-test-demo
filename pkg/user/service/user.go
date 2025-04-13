@@ -1,7 +1,7 @@
 package service
 
 import (
-	"MockTest/internal/user/dao"
+	"MockTest/pkg/user/dao"
 	"context"
 )
 

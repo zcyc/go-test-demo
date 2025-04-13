@@ -1,12 +1,13 @@
 package tests
 
 import (
-	"MockTest/internal/user/dao"
-	"MockTest/internal/user/dao/mocks"
-	"MockTest/internal/user/service"
+	"MockTest/pkg/user/dao"
+	"MockTest/pkg/user/mocks"
+	"MockTest/pkg/user/service"
 	"context"
-	"go.uber.org/mock/gomock"
 	"testing"
+
+	"go.uber.org/mock/gomock"
 )
 
 func TestTestingEqual(t *testing.T) {

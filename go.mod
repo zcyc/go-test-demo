@@ -7,7 +7,6 @@ require (
 	github.com/onsi/gomega v1.33.1
 	github.com/stretchr/testify v1.9.0
 	go.uber.org/mock v0.4.0
-	gorm.io/gorm v1.25.11
 )
 
 require (
@@ -16,8 +15,6 @@ require (
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/pprof v0.0.0-20240727154555-813a5fbdbec8 // indirect
-	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
 	golang.org/x/net v0.27.0 // indirect

@@ -1,22 +1,17 @@
 package tests
 
 import (
-	"MockTest/internal/user/dao"
-	"MockTest/internal/user/dao/mocks"
-	"MockTest/internal/user/service"
+	"MockTest/pkg/user/dao"
+	"MockTest/pkg/user/mocks"
+	"MockTest/pkg/user/service"
 	"context"
+	"time"
+
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gmeasure"
 	"go.uber.org/mock/gomock"
-	"testing"
-	"time"
 )
-
-func TestUserGinkgo(t *testing.T) {
-	RegisterFailHandler(Fail)
-	RunSpecs(t, "User Suit")
-}
 
 var _ = Describe("User Suit", func() {
 	var (
